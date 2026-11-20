@@ -1,0 +1,10 @@
+실행: 20261116_000900_pp-paper_reference_path_outer_lane
+경로: reference_path_outer_lane (한 바퀴 41.07 m)
+모드: paper
+파라미터: mode=paper, v_tar=0.8, v_mode=curve, Lf=1.8, t_la=1.2, Lmin=0.6, Lmax=2.5, e_max=0, f_max=0.05, r_up=2.5, d_search=2.5, cand_step=0.03, alpha_max=1, beta_max=0.95, step1_on=true, step2_on=true, phi_max=1.3963
+완주: 예 (완주), 진행 거리 41.08 m
+주행 시간: 51.66 s (2584 스텝)
+횡오차 e_lat [m]: 평균|e| 0.0238, RMS 0.0331, MSE 0.001098, 최대|e| 0.0902, 표준편차 0.0326
+방향오차 e_head [deg]: RMS 1.82, 최대 6.20
+조향 한계 도달 비율: 0.0 %
+제어 계산시간 [ms]: 평균 7.70, 최대 36.38

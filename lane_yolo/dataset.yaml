@@ -1,0 +1,10 @@
+path: C:/Users/haepi/OneDrive/Desktop/KIIS2026_Unity/yolo
+train:
+  - 20261115_204947/images
+  - 20261115_204754/images
+val:
+  - 20261115_205703/images
+names:
+  0: outer_solid
+  1: center_dashed
+  2: inner_solid

@@ -1,0 +1,19 @@
+# Unity가 다시 만드는 폴더와 파일
+KIIS2026_AutoCar/[Ll]ibrary/
+KIIS2026_AutoCar/[Tt]emp/
+KIIS2026_AutoCar/[Ll]ogs/
+KIIS2026_AutoCar/[Oo]bj/
+KIIS2026_AutoCar/[Bb]uild*/
+KIIS2026_AutoCar/[Uu]ser[Ss]ettings/
+KIIS2026_AutoCar/Assets/_Recovery*
+*.csproj
+*.sln
+*.slnx
+.vs/
+.vscode/
+# YOLO 학습 사진 (636 MB, OneDrive에 백업됨)
+yolo/
+# Python, MATLAB 임시 파일
+__pycache__/
+*.pyc
+*.asv

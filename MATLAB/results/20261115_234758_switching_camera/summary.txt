@@ -1,0 +1,10 @@
+PID / PP_PID / Switching (switch_discrete) - 판단 camera, 2026-11-15 23:47:59
+규칙: 보이는 차선이 모두 곡선이면 PP_PID, 하나라도 직선이거나 안 보이면 PID (기본 PID)
+모델: bicycle_discrete_step, Ts = 0.100 s, L = 0.59 m, v = 0.80 m/s
+PID: Kp 3, Ki 0.8, Kd 2.6 / PP_PID: Kpp 0.983, Kp 0.01, Ki 0.006, Kd 0.001, Lf 0.80, a 0.59, ell 3, w_cur 0.50
+스텝 518 (51.8 s), 전환 0번, PP_PID 구간 0.0%, 판단 시간 초과 518번, 판단 대기 평균 548.5 ms
+
+제어기        | MSE[m^2]     RMS[m]     최대[m]      | 조향각 명령 RMS [deg] / 조향 속도 RMS [deg/s]
+PID        | 1.161e-03    0.0341     0.0862     | 8.79 / 12.49
+PP_PID     | 1.046e-04    0.0102     0.0273     | 7.97 / 4.27
+Switching  | 1.161e-03    0.0341     0.0862     | 8.79 / 12.49

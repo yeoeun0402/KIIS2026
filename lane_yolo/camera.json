@@ -1,0 +1,9 @@
+{
+  "_note": "Car_Camera geometry read from Unity on 2026-11-15 (car at rest). Used by lane_state.py to project lane masks onto the ground. Update if the camera is moved.",
+  "width": 640,
+  "height": 480,
+  "vertical_fov_deg": 60.0,
+  "height_above_ground_m": 0.637,
+  "pitch_down_deg": 0.0,
+  "forward_offset_from_rear_axle_m": 0.0
+}

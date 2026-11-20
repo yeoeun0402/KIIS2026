@@ -1,0 +1,18 @@
+switching_3 (switch3_discrete) - 20261116_203206, 판단 camera, auto
+블랜디드: delta = l0 delta_PP + l1 delta_PID + l2 delta_BC  (PP [1 0 0], PID [0 1 0], BC [0 0 1]) -> Low-pass Filter -> 조향각
+LPF (lpf_window, 논문 Eq.8-9): 블랜디드 차에만. 순수 PP, 순수 PID, BC 차는 필터 없음. 시작 ell 3, w_current 0.500 (ell = 1이면 필터 없음)
+규칙 (decide_lambda): 보이는 차선이 모두 직선 -> straightMode (기본 PID), 그 밖에는 BC 구간이면 BC, 아니면 PP
+BC 구간 (pp_error_map, 끝 값 기준): PP만으로 한 바퀴 미리 계산해 |0 - e_lat| >= eBC인 곳과 그 lead m 앞 = 경로의 16.0%
+모델: PP/PID/블랜디드 = bicycle_discrete_step, BC = path_model_step (경로 위), Ts = 0.100 s, L = 0.59 m
+시작 값: v 0.80, Lf 0.80, Kp 3, Ki 0.8, Kd 2.6, kappaTh 0.05, eBC 0.02, lead 0.50, ell 3, wcur 0.5, 직선 PID, force auto
+끝 값  : v 0.80, Lf 0.80, Kp 3, Ki 0.8, Kd 2.6, kappaTh 0.05, eBC 0.02, lead 0.50, ell 3, wcur 0.5, 직선 PID, force auto
+스텝 518 (51.8 s), 한 바퀴 완주, 전환 20번, 구간 비율 PP 63.5% / PID 20.3% / BC 16.2%
+판단 시간 초과 0번, 판단 대기 평균 1.1 ms (중앙값 0.8 ms), feature 사진 21장
+
+차          | RMS[m]     최대[m]      | 입력 조향각 RMS [deg]
+PP         | 0.0119     0.0334     | 7.86
+PID        | 0.0341     0.0862     | 8.79
+BC         | 0.0000     0.0000     | 8.21
+블랜디드       | 0.0257     0.1005     | 8.59
+
+블랜디드 vs 레퍼런스(BC 차): 주행 경로 차이 RMS 0.0257 m (최대 0.101 m), 입력 조향각 차이 RMS 3.04 deg (최대 11.78), 출력 조향각 차이 RMS 3.04 deg (최대 11.78)
