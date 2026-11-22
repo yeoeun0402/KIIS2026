@@ -1,0 +1,28 @@
+frame: track
+marker_size_m: 0.265
+marker_dictionary: DICT_7X7_50
+source_session: '20261122_215501'
+created: 2026-11-22 22:05
+aligned_to: markers_on_outer_line
+mount_estimate:
+  pitch_down_deg: 1.717
+  roll_deg: 1.876
+  yaw_deg: 8.052
+  fixed: false
+focal_estimate:
+  scale: 0.9814
+  fx: 1453.9
+  fy: 1456.6
+  calib_fx: 1481.4
+  fixed: false
+markers_csv: markers.csv
+realign:
+  rot_deg: -12.436
+  shift_m:
+  - 0.2435
+  - 0.6952
+  about:
+  - 1.265
+  - 6.659
+  skipped_ids:
+  - 3

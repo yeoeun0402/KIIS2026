@@ -1,0 +1,22 @@
+# 영상·bag·캐시 (GitHub 100MB 한도, 세션 원본은 rsync/외장 디스크로 옮김)
+*.mkv
+*.mp4
+*.avi
+*.db3
+*.mcap
+*.pkl
+*.tgz
+*.zip
+
+# ROS 2 / colcon 빌드 산출물
+build/
+install/
+log/
+
+# 파이썬
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 임시 출력
+out/

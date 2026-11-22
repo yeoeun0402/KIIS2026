@@ -1,0 +1,14 @@
+{
+ "states": 559,
+ "duration_s": 37.4,
+ "pose_valid_pct": 100.0,
+ "moving_pct": 3.6,
+ "v_max": 0.143,
+ "v_min": -0.213,
+ "v_lat_abs_median_moving": 0.054,
+ "delta_valid_pct": 0.0,
+ "warnings": [
+  "옆 방향 속도 중앙 0.054 m/s — 장착 yaw·정합 확인 (미끄러짐 없으면 ~0)",
+  "δ 전부 NaN — 조향 보정 없음 (calib_steer.sh)"
+ ]
+}

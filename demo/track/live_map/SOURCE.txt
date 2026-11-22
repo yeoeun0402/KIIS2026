@@ -1,0 +1,5 @@
+실시간 localization(~/version__1/dashboard/live_loc.py) 이 쓰는 고정 마커 지도 (마커 세트 old: DICT_5X5_50, 0.175 m).
+원본: sessions/20261122_140050/map (2026-11-22 14:00 한 바퀴 지도 주행, 마커 11개, 재투영 RMS 2.34 px, 차선 100% 커버, aligned: start).
+경고: 위 오른쪽 (x 13.2, y 8.9, s 24 m) 이어보기 끊김 7 s — 그 근처 마커 12·2 위치가 앞뒤로 조금 밀렸을 수 있음.
+이전 지도: live_map_backup_20261122_002434 (sessions/20261122_002434/map, 마커 9개, 1/3 바퀴).
+마커를 옮기거나 추가하면: 한 바퀴 이상 주행 → build_map → 이 폴더에 markers.csv·map.yaml·report.json 복사.

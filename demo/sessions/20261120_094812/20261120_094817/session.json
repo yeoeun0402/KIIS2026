@@ -1,0 +1,34 @@
+{
+  "session": "20261120_094817",
+  "start": "2026-11-20T09:48:17",
+  "t0_epoch": 1795135697.199064,
+  "end": "2026-11-20T09:48:53",
+  "host": "lee-VivoBook-ASUSLaptop-X571GT-X571GT",
+  "git_commit": null,
+  "firmware_sha256_12": "114c336c910c",
+  "port": "/home/lee/demo/out/p5prep/rehearsal/tmp.eMsWRYXXcH/ttyLAPTOP",
+  "params": {
+    "port": "/home/lee/demo/out/p5prep/rehearsal/tmp.eMsWRYXXcH/ttyLAPTOP",
+    "baud": 9600,
+    "step": 10,
+    "max_speed": 40,
+    "keepalive_hz": 10.0,
+    "record": true,
+    "log_dir": "/home/lee/demo/ros_ws/runs/20261120_094812",
+    "camera": "none",
+    "video_size": "1280x720",
+    "video_fps": 30
+  },
+  "end_reason": "q",
+  "summary": {
+    "duration_s": 36.645,
+    "first_board_reply_s": 2.042,
+    "keys": 42,
+    "commands_sent": 393,
+    "board_lines": 994,
+    "pot_samples": 661,
+    "pot_min": 328,
+    "pot_max": 691,
+    "max_abs_pwm": 20
+  }
+}

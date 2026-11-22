@@ -1,0 +1,127 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded: ~
+      Splitter Ratio: 0.5
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid 0.5 m
+      Enabled: true
+      Cell Size: 0.5
+      Plane Cell Count: 24
+      Color: 160; 160; 164
+      Alpha: 0.5
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Marker Scale: 0.4
+      Show Arrows: false
+      Show Axes: true
+      Show Names: true
+      Frames:
+        All Enabled: true
+      Value: true
+    - Class: rviz_default_plugins/Path
+      Name: 차량 궤적 (/car/path)
+      Enabled: true
+      Color: 0; 135; 68
+      Line Style: Billboards
+      Line Width: 0.03
+      Pose Style: None
+      Alpha: 1
+      Topic:
+        Value: /car/path
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Value: true
+    - Class: rviz_default_plugins/Pose
+      Name: 차량 자세 (/car/pose)
+      Enabled: true
+      Shape: Arrow
+      Color: 0; 87; 231
+      Shaft Length: 0.35
+      Shaft Radius: 0.03
+      Head Length: 0.12
+      Head Radius: 0.07
+      Alpha: 1
+      Topic:
+        Value: /car/pose
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Name: SLAM 마커 (/aruco/markers)
+      Enabled: true
+      Namespaces: {}
+      Topic:
+        Value: /aruco/markers
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Name: 실측 마커 (/track/landmarks)
+      Enabled: true
+      Namespaces: {}
+      Topic:
+        Value: /track/landmarks
+        Depth: 1
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Name: 카메라 (/aruco/debug_image)
+      Enabled: true
+      Normalize Range: true
+      Topic:
+        Value: /aruco/debug_image
+        Depth: 1
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 252; 252; 251
+    Fixed Frame: __FIXED_FRAME__
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 7.0
+      Focal Point:
+        X: 2.0
+        Y: 0.0
+        Z: 0.0
+      Pitch: 0.75
+      Yaw: 3.6
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+    Saved: ~
+Window Geometry:
+  Width: 1500
+  Height: 900
+  X: 60
+  Y: 60
+  Hide Left Dock: false
+  Hide Right Dock: true

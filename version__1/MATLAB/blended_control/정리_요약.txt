@@ -1,0 +1,126 @@
+PP_PID 경로 추종 정리 (핵심만)                                   2026-11-09
+기준 논문: Chen et al., "Optimization of Pure Pursuit Controller based on PID
+           Controller and Low-pass Filter", ITSC 2018 (PP_PI) + D 항 추가
+코드 폴더: MATLAB/blended_control   (자세한 설명: PP_PID_정리.md, README.md)
+
+==================================================================
+1. 연속 시간 모델 찾기
+==================================================================
+- 키네마틱스 모델 (기구학 자전거 모델, 뒤 차축 중앙 기준, L = 0.59 m)
+    dx/dt = v cos(θ)
+    dy/dt = v sin(θ)
+    dθ/dt = v tan(δ) / L
+  액추에이터
+    dδ/dt = ω                  (조향: 인테그레이터)
+    ds/dt = v,  dv/dt = a      (전진: 더블 인테그레이터)
+
+- PP 알고리즘 (Pure Pursuit)
+    δ_pp(t) = atan( 2 L sin(α(t)) / L_ad(t) )
+      선행점: 경로를 따라 L_f 앞의 점
+      α: 차 방향과 (차 → 선행점) 방향 사이 각,  L_ad: 차와 선행점 사이 거리
+
+- PID control (횡오차 e = 0 - e_lat, 목표 - 현재)
+    δ(t) = K_p e(t) + K_i ∫ e dt + K_d de/dt
+
+==================================================================
+2. 이산 모델로 바꾸기   (T_s = 0.1 s, k = 스텝 번호, t = k T_s)
+==================================================================
+- 키네마틱스 모델 (입력은 한 스텝 동안 일정 = ZOH → 정확한 이산식)
+    [s; v; δ][k+1] = A [s; v; δ][k] + B [a; ω][k]
+      A = [1 T 0; 0 1 0; 0 0 1],   B = [T^2/2 0; T 0; 0 T]
+      s[k+1] = s[k] + T v[k] + T^2/2 a[k],  v[k+1] = v[k] + T a[k],  δ[k+1] = δ[k] + T ω[k]
+    Δs = s[k+1] - s[k]
+    x[k+1] = x[k] + Δs cos θ[k]
+    y[k+1] = y[k] + Δs sin θ[k]
+    θ[k+1] = θ[k] + Δs tan δ[k+1] / L
+    입력 한계: a -2 ~ +1 m/s^2 (v 0 ~ 1.5 m/s), ω ±90°/s (δ ±30°)
+    파일: path_model_matrices.m, path_model_step.m, bicycle_discrete_step.m
+
+- PP 알고리즘 (매 스텝 k에서 계산)
+    δ_pp[k] = atan( 2 L sin α[k] / L_ad[k] )
+    조향 입력: ω[k] = (δ_cmd[k] - δ[k]) / T_s   →  δ[k+1] = δ_cmd[k]  (한 스텝 뒤 반영)
+
+- PID control
+    δ[k] = K_p e[k] + K_i Σ e[j] T_s + K_d (e[k] - e[k-1]) / T_s
+    (비교용 PID: pid_steer.m, 게인 3.0 / 0.8 / 2.6)
+
++ tracking error plot (blended_discrete.m 그림 오른쪽)
+    ① 조향각 추종 (PP_PID): 목표 δ_ref = atan(Lκ) 노랑 / 현재 δ 빨강 / δ_ref - δ 주황
+    ② 조향각 오차 (δ_ref - δ)의 누적 MSE: PP 초록, PID 파랑, PP_PID 빨강
+    ③ 궤적 오차 = 레퍼런스 경로 - 주행 경로 = 0 - e_lat: PP, PID, PP_PID
+    맵 아래 체크박스(키 R,1,2,3,L,Y,D,E)로 각 선을 켜고 끔
+
+==================================================================
+3. Unity 환경에 적용 시키기
+==================================================================
+<구현 방법>
+- MATLAB이 모든 계산을 하고, Unity는 받은 상태로 차를 옮겨 보여주기만 함
+- 통신: TCP 127.0.0.1:55001 (MATLAB = 클라이언트, Unity = 서버)
+- 시작: RESET(궤적 지우기) → PATH(레퍼런스 경로) → 출발 상태
+- 매 스텝: 상태 한 줄 전송 "t,x,y,yaw,v,delta,yawRate,e_lat,e_head,...(21칸)"
+- 좌표: MATLAB x → Unity X, MATLAB y → Unity Z, Unity 회전 Y = 90° - θ, 앞바퀴 = -δ
+- 키보드 버전: Unity에서 Space/→ 누름 → "STEP,↑,↓"를 MATLAB으로 → 한 스텝 계산 → 상태 전송
+- 자동 버전: MATLAB이 0.1 s마다 스스로 진행 (실시간)
+- 주의: Unity는 한 번에 한 연결만 받음 → 실행이 끝나면 MATLAB이 연결을 닫음 (onCleanup)
+
+<구현 파일>
+- MATLAB: blended_discrete.m (실행), unity_link.m (TCP: connect / reset / path / state)
+- Unity : Assets/scripts/CarStateReceiver.cs (받아서 차 이동, SendLine으로 키 전송)
+          Assets/scripts/PathOverlay.cs (경로·궤적·선행점 그리기)
+          Assets/scripts/test1/StepInput.cs (Space/→/↑/↓/Q 키 → MATLAB)
+
+<핵심 코드>
+  % 연결과 시작 (blended_discrete.m)
+  client = unity_link('connect', p);
+  unity_link('reset', client); unity_link('path', client, ref, 0.05);
+  % 키보드 버전: STEP이 올 때까지 기다림
+  cmd = strtrim(string(readline(client)));          % "STEP,1,0" → ↑ 가속
+  % 매 스텝: 계산 후 PP_PID 차 상태 전송
+  unity_link('state', client, car(iB), eN, dbgU);
+
+<파일 정리>
+  MATLAB/blended_control/
+    blended_discrete.m      ★ 실행 (세 제어기 나란히 계산, Unity 전송, 그림, 기록)
+    blended_steer.m         PP / PP_PID 한 스텝 (논문 Eq.3–10 + D)
+    pid_steer.m             비교용 PID
+    lpf_window.m            Low-pass Filter (논문 Eq.8–9)
+    blended_params.m        파라미터 기본값, K_pp + K_p + K_i + K_d = 1
+    bicycle_discrete_step.m 이산 차량 모델 (인테그레이터 / 더블 인테그레이터 + 기구학)
+    bicycle_step.m, path_model_matrices.m, path_model_step.m, path_pose.m   (복제본)
+    test_blended.m          테스트 16개 (1번 = Unity 한 바퀴)
+    check_live_tuning.m     실행 중 파라미터 변경 확인
+    plot_blend_components.m 항별 기여 그림 (blending 확인)
+  결과: MATLAB/results/<날짜_시간>_blended_discrete_<keyboard|auto>/
+        (timeseries.csv, summary.txt, result.png)
+
+--------------------------------------------------------------------
+
+==================================================================
+4. PP_PID 블렌디드 방식으로 control하기
+==================================================================
+- 식
+    δ_cmd[k] = Lowpass( K_pp δ_pp + δ_p + δ_i + δ_d ),   K_pp + K_p + K_i + K_d = 1
+      δ_pp = atan(2 L sin α / L_ad)                          (Eq.3)
+      δ_p  = K_p e_la,   e_la = e + (a + L_ad) sin Δψ         (Eq.4–6, 횡오차 + 방향 오차)
+      δ_i  = K_i Σ e                                          (Eq.7, 스텝마다 더함)
+      δ_d  = K_d (e[k] - e[k-1]) / T_s                        (추가한 D 항)
+    Lowpass (Eq.8–9): δ_cmd[k] = w δ_raw[k] + (1 - w)/(ℓ - 1) Σ(직전 ℓ-1개 출력)
+- 블렌디드 = 매 스텝 네 항을 모두 계산해서 가중합 (PP ↔ PID 전환 없음)
+- 핵심 코드 (blended_steer.m)
+    ela  = eLat + (g.a + Lad) * sin(dPsi);                       % 50행
+    dP   = g.Kp * ela;                                            % 51행
+    mem.Se = mem.Se + eLat;   dI = g.Ki * mem.Se;                 % 54–55행
+    dE = (eLat - mem.ePrev) / T;   dD = g.Kd * dE;                % 58–64행
+    dRaw = g.Kpp * dPP + dP + dI + dD;                            % 67행 ★ 블렌디드
+    [dCmd, mem.hist] = lpf_window(mem.hist, dRaw, g.ell, g.wcur); % 68행 ★ Low pass
+  이후: ω = (dCmd - δ)/T_s → bicycle_discrete_step → 다음 상태 (blended_discrete.m 245–246행)
+- 기본값: L_f 0.8 m, K_p 0.01, K_i 0.006, K_d 0.001, K_pp 0.983, a 0.59 m, ℓ 3, w 0.5
+- 결과 (한 바퀴, 0.8 m/s): 궤적 오차 RMS  PP 0.0118 m / PID 0.0341 m / PP_PID 0.0102 m
+                           조향각 오차 RMS PP 1.96°   / PID 3.29°    / PP_PID 1.90°
+- 주의: 합 = 1 규칙 때문에 이 차(오차 수 cm)에서는 P·D 항 효과가 작고, 개선은 주로 Low pass에서 옴
+        (규칙 없이 K_pp 1, K_p 2, K_i 0.02, K_d 2, a 0이면 0.0063 m)
+- 실행 (MATLAB 폴더에서 setup_paths 후, Unity Play 먼저)
+    blended_discrete                     % 키보드: ↑를 누른 채 Space
+    blended_discrete('input', 'auto')    % 자동 한 바퀴
+    test_blended                         % 테스트 16개
+- 실행 중 조절: 그림 왼쪽 아래 슬라이더 (v, L_f, a, w, ℓ, K_p, K_i, K_d / K_pp는 자동), 다음 스텝부터 적용

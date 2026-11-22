@@ -1,0 +1,46 @@
+Input #0, video4linux2,v4l2, from '/dev/video0':
+  Duration: N/A, start: 1795185156.123969, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline), yuvj422p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 118:118 DAR 16:9], 30 fps, 30 tbr, 1000k tbn, 1000k tbc
+Output #0, matroska, to '/home/lee/demo/car_drive_exp_copy/log/20261120_233235/video.mkv':
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream #0:0: Video: mjpeg (Baseline) (MJPG / 0x47504A4D), yuvj422p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 118:118 DAR 16:9], q=2-31, 30 fps, 30 tbr, 1k tbn, 1000k tbc
+Output #1, mkvtimestamp_v2, to '/home/lee/demo/car_drive_exp_copy/log/20261120_233235/video_ts.txt':
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream #1:0: Video: mjpeg (Baseline), yuvj422p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 118:118 DAR 16:9], q=2-31, 30 fps, 30 tbr, 1k tbn, 1000k tbc
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #0:0 -> #1:0 (copy)
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28551, current: 28551; changing to 28552. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28552, current: 28552; changing to 28553. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28553, current: 28552; changing to 28554. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28554, current: 28553; changing to 28555. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28555, current: 28554; changing to 28556. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28556, current: 28554; changing to 28557. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28557, current: 28554; changing to 28558. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28558, current: 28555; changing to 28559. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28559, current: 28555; changing to 28560. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28560, current: 28556; changing to 28561. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28561, current: 28556; changing to 28562. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28562, current: 28557; changing to 28563. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28563, current: 28557; changing to 28564. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28564, current: 28558; changing to 28565. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28565, current: 28558; changing to 28566. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28566, current: 28559; changing to 28567. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28567, current: 28559; changing to 28568. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28568, current: 28560; changing to 28569. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28569, current: 28560; changing to 28570. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28570, current: 28561; changing to 28571. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28571, current: 28562; changing to 28572. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28572, current: 28562; changing to 28573. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28573, current: 28562; changing to 28574. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28574, current: 28563; changing to 28575. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28575, current: 28563; changing to 28576. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28576, current: 28564; changing to 28577. This may result in incorrect timestamps in the output file.
+[mkvtimestamp_v2 @ 0x5c8ce1829dc0] Non-monotonous DTS in output stream 1:0; previous: 28577, current: 28575; changing to 28578. This may result in incorrect timestamps in the output file.
+frame= 2022 fps= 30 q=-1.0 Lq=-1.0 size=  905019kB time=00:01:07.64 bitrate=109597.1kbits/s speed=   1x    
+video:1809860kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[video4linux2,v4l2 @ 0x5c8ce1821500] Some buffers are still owned by the caller on close.
+ioctl(VIDIOC_QBUF): Bad file descriptor
+Exiting normally, received signal 2.

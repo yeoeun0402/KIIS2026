@@ -1,0 +1,48 @@
+{
+  "session": "/home/yeoeun/demo/sessions/20261122_153741",
+  "marker_size_m": 0.265,
+  "n_keyframes": 1725,
+  "n_markers": 13,
+  "reproj_rms_px": 3.674,
+  "reproj_p95_px": 7.041,
+  "mount_estimate": {
+    "pitch_down_deg": 2.67,
+    "roll_deg": 2.087,
+    "yaw_deg": 5.047,
+    "fixed": false
+  },
+  "focal_estimate": {
+    "scale": 0.9638,
+    "fx": 1427.7,
+    "fy": 1430.4,
+    "calib_fx": 1481.4,
+    "fixed": false
+  },
+  "start_pose_used": [
+    1.265,
+    6.659,
+    -1.5708
+  ],
+  "start_pose_final": [
+    1.265,
+    6.659,
+    -1.5708
+  ],
+  "lane_coverage": 1.0,
+  "lane_fit_shift_m": [
+    -0.1182,
+    0.0831
+  ],
+  "lane_fit_rot_deg": -3.109,
+  "lateral_dev_m": {
+    "mean": 0.06,
+    "std": 0.192,
+    "p95_abs": 0.422
+  },
+  "aligned_to": "start",
+  "verdict": "FAIL",
+  "warnings": [
+    "재투영 RMS 3.7px > 3 — 지도 신뢰 불가"
+  ],
+  "covis_gaps": []
+}

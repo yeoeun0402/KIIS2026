@@ -1,0 +1,71 @@
+[INFO] [launch]: All log files can be found below /home/lee/.ros/log/2026-11-20-09-48-13-064432-lee-VivoBook-ASUSLaptop-X571GT-X571GT-3110249
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [static_transform_publisher-1]: process started with pid [3110314]
+[INFO] [static_transform_publisher-2]: process started with pid [3110316]
+[INFO] [video_publisher-3]: process started with pid [3110318]
+[INFO] [aruco_slam_node-4]: process started with pid [3110320]
+[INFO] [car_state_node-5]: process started with pid [3110322]
+[INFO] [ros2-6]: process started with pid [3110324]
+[static_transform_publisher-1] [INFO] [1795135693.211056104] [tf_base_to_camera]: Spinning until stopped - publishing transform
+[static_transform_publisher-1] translation: ('0.000000', '0.000000', '0.000000')
+[static_transform_publisher-1] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-1] from 'base_link' to 'camera_link'
+[static_transform_publisher-2] [INFO] [1795135693.211231310] [tf_camera_to_optical]: Spinning until stopped - publishing transform
+[static_transform_publisher-2] translation: ('0.000000', '0.000000', '0.000000')
+[static_transform_publisher-2] rotation: ('-0.500000', '0.500000', '-0.500000', '0.500000')
+[static_transform_publisher-2] from 'camera_link' to 'camera_optical'
+[ros2-6] stdin is not a terminal device. Keyboard handling disabled.[INFO] [1795135693.713909790] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[ros2-6] [INFO] [1795135693.716933098] [rosbag2_storage]: Opened database '/home/lee/demo/ros_ws/runs/20261120_094812/bag/bag_0.db3' for READ_WRITE.
+[ros2-6] [INFO] [1795135693.718560133] [rosbag2_recorder]: Listening for topics...
+[ros2-6] [INFO] [1795135693.718580497] [rosbag2_recorder]: Event publisher thread: Starting
+[ros2-6] [INFO] [1795135693.723743051] [rosbag2_recorder]: Subscribed to topic '/tf_static'
+[ros2-6] [INFO] [1795135693.723889432] [rosbag2_recorder]: Recording...
+[car_state_node-5] [WARN] [1795135693.736869718] [car_state]: 조향 보정 파일 없음 (미지정) → delta = NaN. 현장에서 calib_steer.sh 로 만들 것
+[car_state_node-5] [INFO] [1795135693.745267787] [car_state]: 자세 /car/pose · POT /car/steering_pot · L=0.260 m → /car/state · /car/odom
+[ros2-6] [INFO] [1795135693.827626073] [rosbag2_recorder]: Subscribed to topic '/car/odom'
+[ros2-6] [INFO] [1795135693.829787376] [rosbag2_recorder]: Subscribed to topic '/car/state'
+[ros2-6] [INFO] [1795135693.932100872] [rosbag2_recorder]: Subscribed to topic '/camera/camera_info'
+[ros2-6] [INFO] [1795135693.933101009] [rosbag2_recorder]: Subscribed to topic '/camera/image_raw/compressed'
+[video_publisher-3] [INFO] [1795135693.941772367] [camera.video_publisher]: /home/lee/car_calibration/corridor_map/videos/corridor_mapping_01.mkv mjpeg 1920x1080 897프레임 30.0s → /camera/image_raw/compressed (0.5배속, JPEG 그대로)
+[aruco_slam_node-4] [INFO] [1795135696.550498147] [aruco_slam]: 구독 /camera/image_raw/compressed · 장착 {'x': 0.0, 'y': 0.0, 'z': 0.0, 'pitch_down_deg': 0.0, 'yaw_deg': 0.0, 'roll_deg': 0.0} · 흑백 디코드 True · 기록 /home/lee/demo/ros_ws/runs/20261120_094812/slam
+[ros2-6] [INFO] [1795135696.551778158] [rosbag2_recorder]: Subscribed to topic '/aruco/markers'
+[aruco_slam_node-4] [INFO] [1795135696.552419495] [aruco_slam]: camera_info 1920x1080: fx 1481.4 fy 1484.2 cx 1027.9 cy 428.9
+[ros2-6] [INFO] [1795135696.553232252] [rosbag2_recorder]: Subscribed to topic '/aruco/visible'
+[ros2-6] [INFO] [1795135696.554288323] [rosbag2_recorder]: Subscribed to topic '/aruco_slam/stats'
+[ros2-6] [INFO] [1795135696.555874889] [rosbag2_recorder]: Subscribed to topic '/car/cam_pose'
+[ros2-6] [INFO] [1795135696.556765009] [rosbag2_recorder]: Subscribed to topic '/car/pose'
+[ros2-6] [INFO] [1795135696.557641006] [rosbag2_recorder]: Subscribed to topic '/tf'
+[aruco_slam_node-4] [INFO] [1795135697.502760172] [aruco_slam]: 수신 15.0 · 처리 14.0 fps · 처리 36.1 ms · 지연 48.3 ms · 버림 0 · 지도 마커 4
+[ros2-6] [INFO] [1795135699.287402441] [rosbag2_recorder]: Subscribed to topic '/car/steering_pot'
+[ros2-6] [INFO] [1795135699.288411493] [rosbag2_recorder]: Subscribed to topic '/car/pwm'
+[ros2-6] [INFO] [1795135699.289768797] [rosbag2_recorder]: Subscribed to topic '/car/steer_cmd'
+[ros2-6] [INFO] [1795135699.290699877] [rosbag2_recorder]: Subscribed to topic '/car/board_state'
+[aruco_slam_node-4] [INFO] [1795135702.502590469] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 27.3 ms · 지연 39.4 ms · 버림 0 · 지도 마커 4
+[aruco_slam_node-4] [INFO] [1795135707.502237272] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 26.6 ms · 지연 39.3 ms · 버림 0 · 지도 마커 4
+[aruco_slam_node-4] [INFO] [1795135712.502149013] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 29.7 ms · 지연 40.7 ms · 버림 0 · 지도 마커 4
+[aruco_slam_node-4] [INFO] [1795135717.502478608] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 29.8 ms · 지연 42.4 ms · 버림 0 · 지도 마커 4
+[aruco_slam_node-4] [INFO] [1795135722.502320214] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 29.1 ms · 지연 41.4 ms · 버림 0 · 지도 마커 4
+[aruco_slam_node-4] [INFO] [1795135727.502465970] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 29.4 ms · 지연 42.6 ms · 버림 0 · 지도 마커 4
+[aruco_slam_node-4] [INFO] [1795135732.502201998] [aruco_slam]: 수신 15.0 · 처리 15.0 fps · 처리 26.1 ms · 지연 39.7 ms · 버림 0 · 지도 마커 4
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [ros2-6]: sending signal 'SIGINT' to process[ros2-6]
+[INFO] [car_state_node-5]: sending signal 'SIGINT' to process[car_state_node-5]
+[INFO] [aruco_slam_node-4]: sending signal 'SIGINT' to process[aruco_slam_node-4]
+[INFO] [video_publisher-3]: sending signal 'SIGINT' to process[video_publisher-3]
+[INFO] [static_transform_publisher-2]: sending signal 'SIGINT' to process[static_transform_publisher-2]
+[INFO] [static_transform_publisher-1]: sending signal 'SIGINT' to process[static_transform_publisher-1]
+[car_state_node-5] [car_state] 발행 559 · 최고 |v| 0.21 m/s · |v_lat| 중앙 0.054 m/s (움직일 때) · EKF 갱신 558 / 버림 0 / 재시작 0
+[aruco_slam_node-4] [aruco_slam] 종료: {"frames_received": 559, "frames_processed": 559, "frames_dropped": 0, "frames_with_marker": 559, "proc_ms_median": 28.9, "proc_ms_p95": 36.7, "latency_ms_median": 41.2, "latency_ms_p95": 52.2, "landmarks": [0, 1, 2, 3], "mount": {"x": 0.0, "y": 0.0, "z": 0.0, "pitch_down_deg": 0.0, "yaw_deg": 0.0, "roll_deg": 0.0}, "decode_gray": true, "wall_s": 37.5}
+[static_transform_publisher-2] [INFO] [1795135734.023019451] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[static_transform_publisher-1] [INFO] [1795135734.025493302] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[video_publisher-3] av_interleaved_write_frame(): Broken pipe
+[video_publisher-3] Error writing trailer of pipe:: Broken pipe
+[ros2-6] [INFO] [1795135734.105168067] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[ros2-6] [INFO] [1795135734.107111056] [rosbag2_recorder]: Event publisher thread: Exiting
+[ros2-6] [INFO] [1795135734.107276545] [rosbag2_recorder]: Recording stopped
+[INFO] [static_transform_publisher-2]: process has finished cleanly [pid 3110316]
+[INFO] [static_transform_publisher-1]: process has finished cleanly [pid 3110314]
+[INFO] [car_state_node-5]: process has finished cleanly [pid 3110322]
+[INFO] [video_publisher-3]: process has finished cleanly [pid 3110318]
+[INFO] [ros2-6]: process has finished cleanly [pid 3110324]
+[INFO] [aruco_slam_node-4]: process has finished cleanly [pid 3110320]

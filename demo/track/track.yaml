@@ -1,0 +1,61 @@
+# 트랙 좌표계 정의 + 출발 자세 (2026-11-21, 도면 ~/demo/track/map 기준)
+#
+# 좌표계 "track"
+#   원점  매트(도면 외곽 16000 x 11000 mm) 왼쪽 아래 모서리, 바닥면
+#   x     오른쪽 (도면 16 m 변, map_color 와 같은 방향으로 놓았을 때)
+#   y     위쪽   (11 m 변)
+#   z     위 (바닥 = 0)
+#   θ     +x 기준 반시계 (rad 값은 아래 deg 로부터)
+#   도면은 스캔 PDF 라 축척 오차 ~±3 cm. 매트가 울퉁불퉁해 실제와는 수 cm 차이 가능.
+
+mat:
+  size_m: [16.0, 11.0]
+  drawing: map                # PDF (확장자 없음), map_color = 색·형상 참고용 (축척 다름, 치수로 쓰지 말 것)
+
+lane:
+  driving_lane: 2             # 바깥 차선 (진행 방향 오른쪽)
+  direction: ccw              # 출발선 → 좌회전 → 아래 직선 → 횡단보도 → S자 → 출발선 (계속 좌회전)
+  centerline_csv: lane2_centerline.csv   # s_m,x_m,y_m,heading_deg,curvature_1pm · 5 cm 간격 · s=0 = 앞범퍼 출발점 (선의 차 쪽 가장자리)
+  loop_length_m: 39.78
+  min_radius_m: 2.23
+  lane_width_m: 0.85
+  centerline_offset_from_outer_line_m: 0.45   # 바깥 경계선 중심 → 2차선 중심
+
+start:
+  line: "10 cm 흰 선 (도면 'Finish' 100, map_color 'T1/M1'), 횡단보도 반대편 왼쪽 직선"
+  rule: "앞범퍼를 10 cm 선의 차 쪽 가장자리에 맞춤 (선을 침범하지 않음), 2차선 중앙, 진행 방향(-y)으로 정렬"
+  heading_deg: -90.0          # 직선 구간이 도면 외곽과 평행 → 정확히 -90
+  front_bumper_xy: [1.265, 5.879]     # 선 중심 5.829 + 선 폭 절반 0.05
+  base_link:                  # 뒷축 중심 바닥 투영 = bicycle 모델 기준점 (/car/state 의 x, y, θ)
+    x: 1.265
+    y: 6.659                  # 5.879 + 0.78 (rear_axle_to_front_bumper)
+    theta_deg: -90.0
+  camera_lens:                # base_link + mount.yaml (x 0.0 = 뒷축 바로 위, z 0.75). 2026-11-21 수정 (이전 6.099 = x 0.56 앞 가정)
+    xyz: [1.265, 6.659, 0.75]
+  uncertainty_m: 0.03         # 도면 판독 + 차 놓기 오차 대략
+
+vehicle:                      # 같은 값이 ros_ws/src/car_bringup/config/mount.yaml 에 있음 (그쪽이 원본)
+  model: kinematic_bicycle
+  wheelbase_m: 0.56
+  rear_axle_to_front_bumper_m: 0.78
+  camera_from_rear_axle_m: [0.0, 0.0, 0.75]    # 앞, 왼쪽, 위 — 카메라는 뒷축 바로 위 (2026-11-21 수정, 이전 0.56)
+  camera_pitch_down_deg: 2.5   # 잠정 (영상 추정), roll 2.0 — mount.yaml 참고
+
+markers:
+  # 마커는 렌즈(0.75 m)보다 낮음 — 지난 영상에서 렌즈 아래 0.30~0.38 m (중심 높이 약 0.4 m)
+  # 카메라 cy=429 px 라 화면 아래쪽 여유가 큼 → 약 0.8~0.9 m 보다 가까우면 화면 밑으로 빠짐
+  # ★ 마커 고르기: 아래 use 한 줄만 바꾸면 됨 (old | new). 한 번만 다르게 돌릴 때는 환경변수 MARKERS=old (예: ./twin.sh --markers old)
+  #   쓰는 곳: 마커 검출 사전·크기 (live_loc, build_map, check_camera, aruco-slam, render) · 실시간 고정 지도 폴더 (live_map)
+  #   지도는 그 지도를 만든 마커 세트와만 같이 쓸 수 있음 (사전이 다르면 ID 가 같아도 다른 마커)
+  use: new
+  sets:
+    old:                        # 이전 마커 (매트에 붙어 있던 것): 5x5, 검은 사각형 자로 잰 17.5 cm
+      dictionary: DICT_5X5_50
+      size_m: 0.175
+      live_map: live_map        # 실시간 localization 고정 지도 폴더 (track.yaml 기준). 원본 sessions/20261122_002434/map
+    new:                        # 2026-11-22 새 마커 (7x7, ID 0~14, 한 장씩) — 모두 2차선 바깥 경계선 위에 세움
+      dictionary: DICT_7X7_50
+      size_m: 0.265             # 지도용 값. 자로 잰 건 27.5 cm (생성기 290 mm, 인쇄하며 약 5% 줄어듦) 인데 그 값이면 지도가
+                                # 도면보다 약 4% 커짐 → 2차선 모양·마커 위치에 맞는 0.265 를 씀 (2026-11-22, 매트 실측 전 잠정)
+      live_map: live_map_7x7    # 실시간 고정 지도. 바꾸기: ~/demo/update_map.sh (한 바퀴 주행 뒤)
+      marker_line_m: {3: -1.25}  # 바깥 경계선(+0.45)이 아닌 선에 세운 마커: ID → 2차선 중심에서 가로 거리 (+ 바깥). 3 = 1차선 왼쪽 두꺼운 선 (S자)

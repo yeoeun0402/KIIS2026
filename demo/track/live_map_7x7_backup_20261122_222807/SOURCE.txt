@@ -1,0 +1,4 @@
+실시간 localization 고정 지도 — 마커 세트 new (DICT_7X7_50). ~/demo/update_map.sh 가 2026-11-22 22:08 에 반영.
+원본: /home/yeoeun/demo/sessions/20261122_215501/map_live (마커 12개, 크기 0.265 m, 재투영 3.078 px, 맞춤 markers)
+이전 지도: /home/yeoeun/demo/track/live_map_7x7_backup_20261122_220835
+되돌리기: cp /home/yeoeun/demo/track/live_map_7x7_backup_20261122_220835/* /home/yeoeun/demo/track/live_map_7x7/

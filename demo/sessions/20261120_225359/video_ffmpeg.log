@@ -1,0 +1,19 @@
+Input #0, video4linux2,v4l2, from '/dev/video2':
+  Duration: N/A, start: 1795182839.950468, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline), yuvj422p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 118:118 DAR 16:9], 30 fps, 30 tbr, 1000k tbn, 1000k tbc
+Output #0, matroska, to '/home/lee/demo/car_drive_exp_copy/log/20261120_225359/video.mkv':
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream #0:0: Video: mjpeg (Baseline) (MJPG / 0x47504A4D), yuvj422p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 118:118 DAR 16:9], q=2-31, 30 fps, 30 tbr, 1k tbn, 1000k tbc
+Output #1, mkvtimestamp_v2, to '/home/lee/demo/car_drive_exp_copy/log/20261120_225359/video_ts.txt':
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream #1:0: Video: mjpeg (Baseline), yuvj422p(pc, bt470bg/unknown/unknown), 1920x1080 [SAR 118:118 DAR 16:9], q=2-31, 30 fps, 30 tbr, 1k tbn, 1000k tbc
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #0:0 -> #1:0 (copy)
+frame= 1541 fps= 30 q=-1.0 Lq=-1.0 size=  569881kB time=00:00:51.47 bitrate=90699.1kbits/s speed=0.999x    
+video:1139625kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[video4linux2,v4l2 @ 0x59935ac76500] Some buffers are still owned by the caller on close.
+ioctl(VIDIOC_QBUF): Bad file descriptor
+Exiting normally, received signal 2.

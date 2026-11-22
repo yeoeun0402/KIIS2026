@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twin Dashboard</title>
+<style>
+:root {
+  --bg: #111418; --panel: #1a1f26; --line: #2c343f; --text: #e6e9ee; --muted: #8b95a3;
+  --sim: #ff4d4d; --loc: #ffd21f; --ok: #3ccf7a; --warn: #f0a33a; --bad: #ff5c5c; --accent: #58a6ff;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font: 14px/1.4 system-ui, -apple-system, "Noto Sans KR", sans-serif; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 56fr 44fr; gap: 8px; height: 100vh; padding: 8px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.head { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-bottom: 1px solid var(--line); font-weight: 600; }
+.head .sub { margin-left: auto; font-weight: 400; color: var(--muted); font-size: 12px; }
+.body { flex: 1; min-height: 0; position: relative; }
+.view { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 0 0 8px 8px; overflow: hidden; }
+.view img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.view .empty { position: absolute; color: var(--muted); text-align: center; padding: 16px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); display: inline-block; }
+.dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.bad { background: var(--bad); }
+.ctrl { padding: 10px 14px; overflow: auto; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px; }
+.ctrl > div { min-width: 0; }
+.mass-val { font-size: 40px; font-weight: 700; letter-spacing: -0.5px; }
+.mass-val small { font-size: 18px; color: var(--muted); font-weight: 500; }
+.row { display: flex; align-items: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+input[type=range] { flex: 1 1 120px; min-width: 120px; accent-color: var(--accent); }
+input[type=number] { width: 80px; background: #0d1014; color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; font-size: 14px; }
+button { background: #232a33; color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 13px; }
+button:hover { border-color: var(--accent); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+td { padding: 3px 0; border-bottom: 1px solid #232a33; }
+td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.status div { display: flex; align-items: center; gap: 8px; margin: 4px 0; font-size: 13px; }
+.keys { margin-top: 8px; font-size: 12px; color: var(--muted); }
+kbd { background: #232a33; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font: 12px ui-monospace, monospace; color: var(--text); }
+kbd.on { border-color: var(--accent); color: var(--accent); }
+.log { font: 11px ui-monospace, monospace; color: var(--muted); margin-top: 6px; max-height: 70px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.legend { display: flex; gap: 12px; font-weight: 400; font-size: 12px; color: var(--muted); }
+.sw { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 4px; border-radius: 2px; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(300px, auto)); height: auto; }
+  .ctrl { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="grid">
+  <section class="panel">
+    <div class="head"><span class="dot" id="camDot"></span>실차 카메라 <span class="sub" id="camSub">-</span></div>
+    <div class="body"><div class="view">
+      <img id="camImg" alt="" src="/cam.mjpg">
+      <div class="empty" id="camEmpty">카메라 화면 없음<br><span class="muted">drive.sh --twin 이 녹화를 시작하면 나옵니다</span></div>
+    </div></div>
+  </section>
+
+  <section class="panel">
+    <div class="head"><span class="dot" id="simDot"></span>Unity 시뮬레이션 <span class="sub" id="simSub">-</span></div>
+    <div class="body"><div class="view">
+      <img id="simImg" alt="" src="/sim.mjpg">
+      <div class="empty" id="simEmpty">시뮬레이션 화면 없음<br><span class="muted">Unity 가 Play 중이면 나옵니다 (TwinStream)</span></div>
+    </div></div>
+  </section>
+
+  <section class="panel">
+    <div class="head">차량 무게 · 상태 <span class="sub" id="runSub">-</span></div>
+    <div class="body ctrl">
+      <div>
+        <div class="mass-val"><span id="massVal">15.0</span> <small>kg</small></div>
+        <div class="row">
+          <button data-d="-1">−1</button>
+          <input type="range" id="massRange" min="5" max="30" step="0.5" value="15">
+          <button data-d="1">+1</button>
+          <input type="number" id="massNum" min="1" max="60" step="0.5" value="15">
+        </div>
+        <table>
+          <tr><td>가속 지연 tauV</td><td id="dTau">-</td></tr>
+          <tr><td>출발 문턱 pwmDead</td><td id="dDead">-</td></tr>
+          <tr><td>PWM 40 일 때 속도</td><td id="dV40">-</td></tr>
+          <tr><td class="muted">기준 무게 (모델을 맞춘 무게) · 굴림 저항</td><td class="muted" id="dRef">-</td></tr>
+        </table>
+        <div class="row" style="margin-top:10px">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="obsChk" checked> 칼만 필터 (localization 으로 시뮬 보정)</label>
+        </div>
+        <table>
+          <tr><td>추정 조향각 · 속도 배율</td><td id="obsTxt">-</td></tr>
+        </table>
+        <div class="keys">운전: 이 페이지 또는 Unity Game 창에서
+          <kbd data-k="w">W</kbd> <kbd data-k="s">S</kbd> 속도 ±10 ·
+          <kbd data-k="a">A</kbd> <kbd data-k="d">D</kbd> 조향 ·
+          <kbd data-k="space">Space</kbd> 정지 · <kbd data-k="q">Q</kbd> 종료·저장</div>
+      </div>
+      <div class="status">
+        <div><span class="dot" id="mDot"></span>MATLAB <span class="muted" id="mTxt">-</span></div>
+        <div><span class="dot" id="lDot"></span>localization <span class="muted" id="lTxt">-</span></div>
+        <table style="margin-top:6px">
+          <tr><td>PWM (실차 값)</td><td id="sPwm">-</td></tr>
+          <tr><td>시뮬 속도</td><td id="sV">-</td></tr>
+          <tr><td>시뮬 위치 (트랙)</td><td id="sXY">-</td></tr>
+          <tr><td>실차 위치 (localization)</td><td id="lXY">-</td></tr>
+          <tr><td>둘 사이 거리</td><td id="dist">-</td></tr>
+        </table>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="head">지도
+      <span class="legend"><span><span class="sw" style="background:var(--sim)"></span>시뮬레이션</span>
+      <span><span class="sw" style="background:var(--loc)"></span>localization (실차)</span>
+      <span><span class="sw" style="background:#9aa4b2"></span>2차선 중심</span></span>
+      <span class="sub"><button id="clearBtn">경로 지우기</button></span></div>
+    <div class="body"><canvas id="map"></canvas></div>
+  </section>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let track = null, param = null, simPath = [], locPath = [], si = 0, li = 0, sg = -1, lg = -1, last = {};
+let massSending = null, massLocal = null;
+
+// ── 무게 ──
+function derived(m) {
+  const p = param || { kv: 0.008, massRef: 15, crr: 0.03, tauVRef: 0.42, pwmDeadRef: 0, maxSpeed: 40 };
+  const b = p.massRef / p.tauVRef, a = p.kv * b;
+  const tau = p.tauVRef * m / p.massRef, dead = p.pwmDeadRef + p.crr * 9.81 * (m - p.massRef) / a;
+  return { tau, dead, v40: p.kv * Math.max(40 - dead, 0), p };
+}
+function showMass(m) {
+  $('massVal').textContent = m.toFixed(1);
+  $('massRange').value = m; $('massNum').value = m;
+  const d = derived(m);
+  $('dTau').textContent = d.tau.toFixed(2) + ' s';
+  $('dDead').textContent = (d.dead >= 0 ? '+' : '') + d.dead.toFixed(1) + ' PWM';
+  $('dV40').textContent = d.v40.toFixed(3) + ' m/s';
+  $('dRef').textContent = d.p.massRef.toFixed(1) + ' kg · ' + d.p.crr;
+}
+function setMass(m) {
+  m = Math.min(60, Math.max(1, Math.round(m * 2) / 2));
+  massLocal = m; showMass(m);
+  clearTimeout(massSending);
+  massSending = setTimeout(() => {
+    fetch('/mass', { method: 'POST', body: JSON.stringify({ mass: m }) }).finally(() => { massLocal = null; });
+  }, 150);
+}
+$('massRange').addEventListener('input', e => setMass(+e.target.value));
+$('massNum').addEventListener('change', e => setMass(+e.target.value));
+document.querySelectorAll('button[data-d]').forEach(b => b.onclick = () => setMass(+$('massRange').value + +b.dataset.d));
+$('obsChk').addEventListener('change', e => fetch('/obs', { method: 'POST', body: JSON.stringify({ on: e.target.checked }) }));
+$('clearBtn').onclick = () => fetch('/clear', { method: 'POST', body: '{}' });
+
+// ── 키보드 (Unity Game 창과 같은 키) ──
+const KEYMAP = { w: 'w', s: 's', a: 'a', d: 'd', ' ': 'space', q: 'q' };
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = KEYMAP[e.key.toLowerCase()];
+  if (!k) return;
+  e.preventDefault();
+  if (k === 'q' && e.repeat) return;
+  fetch('/key', { method: 'POST', body: JSON.stringify({ key: k }) });
+  const el = document.querySelector(`kbd[data-k="${k}"]`);
+  if (el) { el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 150); }
+});
+
+// ── 카메라·시뮬 화면 (MJPEG; 끊기면 다시 연결) ──
+function age(a) { return a == null ? '없음' : a < 1 ? '실시간' : a.toFixed(0) + ' 초 전'; }
+function dotCls(a) { return a == null ? 'dot bad' : a < 1.5 ? 'dot ok' : a < 10 ? 'dot warn' : 'dot bad'; }
+function viewState(name, a) {
+  $(name + 'Dot').className = dotCls(a);
+  $(name + 'Sub').textContent = age(a);
+  $(name + 'Empty').style.display = (a == null || a > 10) ? 'block' : 'none';
+  const img = $(name + 'Img');
+  if (a != null && a < 1.5 && (img.dataset.stale === '1')) { img.src = `/${name}.mjpg?t=${Date.now()}`; img.dataset.stale = '0'; }
+  if (a == null || a > 3) img.dataset.stale = '1';
+}
+
+// ── 상태 받기 ──
+async function poll() {
+  try {
+    const r = await fetch(`/state?si=${si}&li=${li}&sg=${sg}&lg=${lg}`);
+    const s = await r.json();
+    if (s.sg !== sg) { simPath = []; } if (s.lg !== lg) { locPath = []; }
+    simPath.push(...s.sim_new); locPath.push(...s.loc_new);
+    si = s.si; li = s.li; sg = s.sg; lg = s.lg; last = s;
+    if (s.param) param = s.param;
+    if (massLocal == null) showMass(s.mass);
+    viewState('cam', s.cam_age); viewState('sim', s.sim_age);
+    $('mDot').className = 'dot ' + (s.matlab ? 'ok' : 'bad');
+    $('mTxt').textContent = s.matlab ? '연결됨' : '기다리는 중 (twin_drive)';
+    const ls = s.loc_status || '-';
+    $('lDot').className = 'dot ' + (ls === '동작 중' ? 'ok' : ls.startsWith('꺼짐') ? 'bad' : 'warn');
+    $('lTxt').textContent = ls + (s.loc ? ` · 마커 ${s.loc.n}개` : '');
+    $('runSub').textContent = s.run ? s.run : '주행 전';
+    $('sPwm').textContent = s.sim ? (s.sim.pwm >= 0 ? '+' : '') + s.sim.pwm.toFixed(0) + (param ? ' / ' + param.maxSpeed : '') : '-';
+    if (document.activeElement !== $('obsChk')) $('obsChk').checked = !!s.obs_on;
+    $('obsTxt').textContent = s.sim ? `${(s.sim.delta * 180 / Math.PI).toFixed(1)}° · ×${(1 + (s.sim.vs || 0)).toFixed(2)}` + (s.sim.obs ? '' : ' (꺼짐)') : '-';
+    $('sV').textContent = s.sim ? s.sim.v.toFixed(3) + ' m/s' : '-';
+    $('sXY').textContent = s.sim ? `${s.sim.x.toFixed(2)}, ${s.sim.y.toFixed(2)} m` : '-';
+    $('lXY').textContent = s.loc ? `${s.loc.x.toFixed(2)}, ${s.loc.y.toFixed(2)} m` : '-';
+    $('dist').textContent = (s.sim && s.loc) ? Math.hypot(s.sim.x - s.loc.x, s.sim.y - s.loc.y).toFixed(2) + ' m' : '-';
+    $('log').textContent = (s.log || []).slice().reverse().join('\n');
+  } catch (e) {
+    $('mDot').className = 'dot bad'; $('mTxt').textContent = '대시보드 서버 연결 끊김';
+  }
+  draw();
+}
+
+// ── 지도 ──
+const cv = $('map'), ctx = cv.getContext('2d');
+function draw() {
+  const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+  if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  if (!track) return;
+  const [mw, mh] = track.mat, pad = 14;
+  const sc = Math.min((W - 2 * pad) / mw, (H - 2 * pad) / mh);
+  const ox = (W - mw * sc) / 2, oy = (H + mh * sc) / 2;
+  const P = (x, y) => [ox + x * sc, oy - y * sc];
+  // 매트
+  ctx.fillStyle = '#20262e'; ctx.strokeStyle = '#3a434f'; ctx.lineWidth = 1;
+  const [x0, y0] = P(0, mh); ctx.fillRect(x0, y0, mw * sc, mh * sc); ctx.strokeRect(x0, y0, mw * sc, mh * sc);
+  ctx.fillStyle = '#4a5462'; ctx.font = '11px system-ui';
+  for (let x = 0; x <= mw; x += 2) { const [px, py] = P(x, 0); ctx.fillText(x, px + 2, py - 3); }
+  for (let y = 2; y <= mh; y += 2) { const [px, py] = P(0, y); ctx.fillText(y, px + 2, py + 4); }
+  // 2차선 (폭 + 중심선)
+  const cl = track.centerline, hw = track.lane_width / 2;
+  ctx.beginPath();
+  cl.forEach((c, i) => { const h = c[2] * Math.PI / 180, [px, py] = P(c[0] - Math.sin(h) * hw, c[1] + Math.cos(h) * hw); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+  for (let i = cl.length - 1; i >= 0; i--) { const c = cl[i], h = c[2] * Math.PI / 180, [px, py] = P(c[0] + Math.sin(h) * hw, c[1] - Math.cos(h) * hw); ctx.lineTo(px, py); }
+  ctx.closePath(); ctx.fillStyle = 'rgba(154,164,178,0.10)'; ctx.fill();
+  ctx.setLineDash([6, 5]); ctx.strokeStyle = '#9aa4b2'; ctx.lineWidth = 1.2; ctx.beginPath();
+  cl.forEach((c, i) => { const [px, py] = P(c[0], c[1]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+  ctx.closePath(); ctx.stroke(); ctx.setLineDash([]);
+  // 출발선
+  { const [a, b] = P(1.265 - hw, 5.829), [c, d] = P(1.265 + hw, 5.829); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(c, d); ctx.stroke(); }
+  // 마커
+  ctx.fillStyle = '#58a6ff'; ctx.font = '10px system-ui';
+  for (const [id, x, y] of track.markers) { const [px, py] = P(x, y); ctx.fillRect(px - 3, py - 3, 6, 6); ctx.fillText(id, px + 5, py + 3); }
+  // 경로
+  const path = (pts, color, w) => {
+    if (pts.length < 2) return;
+    ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineJoin = 'round'; ctx.beginPath();
+    pts.forEach((p, i) => { const [px, py] = P(p[0], p[1]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+    ctx.stroke();
+  };
+  // localization: 마커 2개 이상 본 점만 선으로 (1개면 위치가 모호해 흐린 점), 5점 이동 평균으로 떨림 줄임
+  const good = locPath.filter(p => p[2] >= 2), smooth = [];
+  for (let i = 0; i < good.length; i++) {
+    let sx = 0, sy = 0, n = 0;
+    for (let j = Math.max(0, i - 2); j <= Math.min(good.length - 1, i + 2); j++) { sx += good[j][0]; sy += good[j][1]; n++; }
+    smooth.push([sx / n, sy / n]);
+  }
+  ctx.fillStyle = 'rgba(255,210,31,0.35)';
+  for (const p of locPath) if (p[2] < 2) { const [px, py] = P(p[0], p[1]); ctx.fillRect(px - 1, py - 1, 2, 2); }
+  path(smooth, getComputedStyle(document.documentElement).getPropertyValue('--loc'), 2.5);
+  path(simPath, getComputedStyle(document.documentElement).getPropertyValue('--sim'), 2.5);
+  // 차 (삼각형)
+  const car = (x, y, th, color) => {
+    const [px, py] = P(x, y), L = Math.max(8, 0.56 * sc);
+    ctx.save(); ctx.translate(px, py); ctx.rotate(-th);
+    ctx.beginPath(); ctx.moveTo(L, 0); ctx.lineTo(-L * 0.4, L * 0.45); ctx.lineTo(-L * 0.4, -L * 0.45); ctx.closePath();
+    ctx.fillStyle = color; ctx.fill(); ctx.strokeStyle = '#000'; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+  };
+  const st = track.start;
+  if (!last.sim && !last.loc) car(st[0], st[1], st[2], 'rgba(255,255,255,0.35)');
+  if (last.loc) car(last.loc.x, last.loc.y, last.loc.th, getComputedStyle(document.documentElement).getPropertyValue('--loc'));
+  if (last.sim) car(last.sim.x, last.sim.y, last.sim.th, getComputedStyle(document.documentElement).getPropertyValue('--sim'));
+}
+window.addEventListener('resize', draw);
+
+fetch('/track').then(r => r.json()).then(t => { track = t; draw(); });
+showMass(15);
+setInterval(poll, 100);
+poll();
+</script>
+</body>
+</html>

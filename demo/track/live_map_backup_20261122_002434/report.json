@@ -1,0 +1,50 @@
+{
+  "session": "/home/yeoeun/demo/sessions/20261122_002434",
+  "marker_size_m": 0.175,
+  "n_keyframes": 700,
+  "n_markers": 9,
+  "reproj_rms_px": 2.66,
+  "reproj_p95_px": 5.223,
+  "mount_estimate": {
+    "pitch_down_deg": 2.217,
+    "roll_deg": 2.084,
+    "yaw_deg": 2.695,
+    "fixed": false
+  },
+  "focal_estimate": {
+    "scale": 0.9898,
+    "fx": 1466.4,
+    "fy": 1469.1,
+    "calib_fx": 1481.4,
+    "fixed": false
+  },
+  "start_pose_used": [
+    1.265,
+    6.659,
+    -1.5708
+  ],
+  "start_pose_final": [
+    1.265,
+    6.659,
+    -1.5708
+  ],
+  "lane_coverage": 0.325,
+  "lane_fit_shift_m": [
+    -0.2476,
+    -0.2069
+  ],
+  "lane_fit_rot_deg": 4.478,
+  "lateral_dev_m": {
+    "mean": -0.028,
+    "std": 0.089,
+    "p95_abs": 0.221
+  },
+  "aligned_to": "start",
+  "verdict": "WARN",
+  "warnings": [
+    "재투영 RMS 2.7px 다소 큼",
+    "차선 기준과 출발 자세 기준이 크게 다름 — 출발 위치·방향을 확인하거나 --align lane",
+    "차선을 32% 만 돎 — 한 바퀴 전체를 돌아야 지도가 완성됨"
+  ],
+  "covis_gaps": []
+}

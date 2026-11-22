@@ -1,0 +1,22 @@
+{
+  "session": "20261121_051209",
+  "start": "2026-11-21T05:12:09",
+  "t0_epoch": 1795205529.277008,
+  "end": null,
+  "host": "lee-VivoBook-ASUSLaptop-X571GT-X571GT",
+  "git_commit": null,
+  "firmware_sha256_12": "03ef41ac5fc9",
+  "port": "/dev/ttyACM0",
+  "params": {
+    "port": "",
+    "baud": 9600,
+    "step": 10,
+    "max_speed": 40,
+    "keepalive_hz": 10.0,
+    "record": true,
+    "log_dir": "/home/lee/demo/car_drive_exp_copy/log",
+    "camera": "auto",
+    "video_size": "1920x1080",
+    "video_fps": 30
+  }
+}

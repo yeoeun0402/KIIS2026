@@ -1,0 +1,94 @@
+{
+  "session": "/home/lee/demo/sessions/20261121_051209",
+  "marker_size_m": 0.2,
+  "n_keyframes": 1963,
+  "n_markers": 13,
+  "reproj_rms_px": 2.629,
+  "reproj_p95_px": 5.16,
+  "mount_estimate": {
+    "pitch_down_deg": 2.504,
+    "roll_deg": 2.107,
+    "yaw_deg": 7.164,
+    "fixed": false
+  },
+  "focal_estimate": {
+    "scale": 1.0028,
+    "fx": 1485.6,
+    "fy": 1488.4,
+    "calib_fx": 1481.4,
+    "fixed": false
+  },
+  "start_pose_used": [
+    1.265,
+    6.659,
+    -1.5708
+  ],
+  "start_pose_final": [
+    1.265,
+    6.659,
+    -1.5708
+  ],
+  "lane_coverage": 0.025,
+  "lane_fit_shift_m": [
+    -0.7405,
+    0.746
+  ],
+  "lane_fit_rot_deg": -3.963,
+  "lateral_dev_m": {
+    "mean": -1.012,
+    "std": 0.32,
+    "p95_abs": 1.582
+  },
+  "aligned_to": "start",
+  "verdict": "WARN",
+  "warnings": [
+    "재투영 RMS 2.6px 다소 큼",
+    "이어보기 끊김 6곳 — 그 구간은 지도가 앞뒤로 밀렸을 수 있음 (마커 추가 권장)",
+    "차선 기준과 출발 자세 기준이 크게 다름 — 출발 위치·방향을 확인하거나 --align lane",
+    "차선을 2% 만 돎 — 한 바퀴 전체를 돌아야 지도가 완성됨"
+  ],
+  "covis_gaps": [
+    {
+      "t": 65.4,
+      "s_lane_m": 14.7,
+      "x": 12.5,
+      "y": 0.73,
+      "gap_s": 0.7
+    },
+    {
+      "t": 67.9,
+      "s_lane_m": 15.4,
+      "x": 13.41,
+      "y": 0.9,
+      "gap_s": 1.63
+    },
+    {
+      "t": 70.67,
+      "s_lane_m": 16.1,
+      "x": 14.34,
+      "y": 1.08,
+      "gap_s": 1.27
+    },
+    {
+      "t": 73.0,
+      "s_lane_m": 16.6,
+      "x": 15.19,
+      "y": 1.4,
+      "gap_s": 1.27
+    },
+    {
+      "t": 73.2,
+      "s_lane_m": 16.7,
+      "x": 15.22,
+      "y": 1.41,
+      "gap_s": 0.2
+    },
+    {
+      "t": 113.67,
+      "s_lane_m": 26.1,
+      "x": 11.46,
+      "y": 10.04,
+      "gap_s": 0.07
+    }
+  ]
+}

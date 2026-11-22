@@ -1,0 +1,22 @@
+# [demo] C920 1280x720 — ~/demo/aruco-slam-fixed/calibration (1080p 캘리브레이션, RMS 0.729 px) × 0.666667
+# 720p 는 1080p 와 같은 화각(T8)이라 K 를 축소만 함. 초점 19 고정 전제.
+image_width: 1280
+image_height: 720
+camera_name: c920
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [987.605914, 0.000000, 685.283145, 0.000000, 989.482430, 285.964029, 0.000000, 0.000000, 1.000000]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.134114, -0.352157, -0.020943, 0.002267, 0.325718]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [987.605914, 0.000000, 685.283145, 0.000000, 0.000000, 989.482430, 285.964029, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

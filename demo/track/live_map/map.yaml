@@ -1,0 +1,18 @@
+frame: track
+marker_size_m: 0.175
+marker_dictionary: DICT_5X5_50
+source_session: '20261122_140050'
+created: 2026-11-22 14:08
+aligned_to: start
+mount_estimate:
+  pitch_down_deg: 2.51
+  roll_deg: 2.096
+  yaw_deg: 3.044
+  fixed: false
+focal_estimate:
+  scale: 0.9582
+  fx: 1419.5
+  fy: 1422.2
+  calib_fx: 1481.4
+  fixed: false
+markers_csv: markers.csv

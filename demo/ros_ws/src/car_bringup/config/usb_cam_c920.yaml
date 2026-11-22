@@ -1,0 +1,24 @@
+# [demo] usb_cam (0.8.1) — C920 MJPG 를 재인코딩 없이 CompressedImage 로 발행
+# 해상도·장치·camera_info 는 camera.launch.py 인자로 덮어씀. 초점·노출은 launch 가 v4l2-ctl 로 따로 설정·확인
+# (usb_cam 의 autofocus/autoexposure 는 옛 컨트롤 이름을 써서 C920·커널 6.8 에서 안 먹을 수 있음 → -1/false 로 건드리지 않게)
+/**:
+  ros__parameters:
+    video_device: "/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920-video-index0"
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "camera_optical"
+    pixel_format: "raw_mjpeg"
+    image_width: 1920
+    image_height: 1080
+    camera_name: "c920"
+    brightness: -1
+    contrast: -1
+    saturation: -1
+    sharpness: -1
+    gain: -1
+    auto_white_balance: true
+    white_balance: 4000
+    autoexposure: false
+    exposure: 156
+    autofocus: false
+    focus: 19

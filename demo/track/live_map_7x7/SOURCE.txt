@@ -1,0 +1,7 @@
+실시간 localization 고정 지도 — 마커 세트 new (DICT_7X7_50). 2026-11-22 22:28 반영 (update_map.sh --align lane 으로 만든 것).
+원본: /home/yeoeun/demo/sessions/20261122_215501/map_live (마커 12개, 크기 0.265 m, 재투영 3.08 px, 맞춤 lane = 한 바퀴 궤적을 2차선 중심에 맞춤)
+바꾼 이유: 22:08 에 반영한 markers 맞춤 지도는 3.2° 더 돌아가 있었음 — 출발 순간 카메라 화면의 흰 차선과 비교하면 lane 맞춤이 맞음,
+  22:14 twin 주행을 이 지도로 옮기면 차선 중심 대비 |편차| 중앙 16 → 4 cm, 95% 24 → 13 cm.
+마커 3 은 S자 안쪽 (바깥 선에서 -1.3~-1.5 m) — 다른 선에 세운 것으로 보임.
+이전 지도: /home/yeoeun/demo/track/live_map_7x7_backup_20261122_222807
+되돌리기: cp /home/yeoeun/demo/track/live_map_7x7_backup_20261122_222807/* /home/yeoeun/demo/track/live_map_7x7/

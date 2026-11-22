@@ -1,0 +1,26 @@
+{
+ "frames_received": 559,
+ "frames_processed": 559,
+ "frames_dropped": 0,
+ "frames_with_marker": 559,
+ "proc_ms_median": 28.9,
+ "proc_ms_p95": 36.7,
+ "latency_ms_median": 41.2,
+ "latency_ms_p95": 52.2,
+ "landmarks": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "mount": {
+  "x": 0.0,
+  "y": 0.0,
+  "z": 0.0,
+  "pitch_down_deg": 0.0,
+  "yaw_deg": 0.0,
+  "roll_deg": 0.0
+ },
+ "decode_gray": true,
+ "wall_s": 37.5
+}

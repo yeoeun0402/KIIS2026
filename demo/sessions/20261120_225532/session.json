@@ -1,0 +1,49 @@
+{
+  "session": "20261120_225532",
+  "start": "2026-11-20T22:55:32",
+  "t0_epoch": 1795182932.623167,
+  "end": "2026-11-20T22:56:34",
+  "host": "lee-VivoBook-ASUSLaptop-X571GT-X571GT",
+  "git_commit": null,
+  "firmware_sha256_12": "114c336c910c",
+  "port": "/dev/ttyACM0",
+  "params": {
+    "port": "",
+    "baud": 9600,
+    "step": 10,
+    "max_speed": 60,
+    "keepalive_hz": 10.0,
+    "record": true,
+    "log_dir": "/home/lee/demo/car_drive_exp_copy/log",
+    "camera": "auto",
+    "video_size": "1920x1080",
+    "video_fps": 30
+  },
+  "video": {
+    "device": "/dev/video2",
+    "name": "HD Pro Webcam C920",
+    "size": "1920x1080",
+    "fps_requested": 30,
+    "input_format": "mjpeg",
+    "file": "video.mkv",
+    "frames_csv": "video_frames.csv",
+    "first_frame_epoch": 1795182933.031782,
+    "frames": 1781,
+    "first_frame_t_s": 0.409,
+    "last_frame_t_s": 59.897,
+    "fps_measured": 29.92,
+    "size_mb": 738.2
+  },
+  "end_reason": "q",
+  "summary": {
+    "duration_s": 61.888,
+    "first_board_reply_s": 2.039,
+    "keys": 49,
+    "commands_sent": 631,
+    "board_lines": 1732,
+    "pot_samples": 1154,
+    "pot_min": 0,
+    "pot_max": 0,
+    "max_abs_pwm": 50
+  }
+}

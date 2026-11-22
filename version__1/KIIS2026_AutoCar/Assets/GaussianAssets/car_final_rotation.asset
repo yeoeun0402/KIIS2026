@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b71fae31e6c7d438e8566dc713e666, type: 3}
+  m_Name: car_final_rotation
+  m_EditorClassIdentifier: 
+  m_FormatVersion: 20231020
+  m_SplatCount: 1179023
+  m_BoundsMin: {x: -0.64915895, y: -0.61571944, z: -0.29322404}
+  m_BoundsMax: {x: 0.445673, y: 0.04496925, z: 0.31163993}
+  m_DataHash:
+    serializedVersion: 2
+    Hash: 986f22e72760007f03611f4b5525b1ff
+  m_PosFormat: 2
+  m_ScaleFormat: 2
+  m_SHFormat: 3
+  m_ColorFormat: 2
+  m_PosData: {fileID: 4900000, guid: c3714cecab727cf40b5647afd9dd52fe, type: 3}
+  m_ColorData: {fileID: 4900000, guid: 0b030f195be15e646817efab3c19d1fb, type: 3}
+  m_OtherData: {fileID: 4900000, guid: dd7d2ed5740d73f478eb446bb45dfbbe, type: 3}
+  m_SHData: {fileID: 4900000, guid: 10b9a7b0edde29d46a4ea2070d3897b0, type: 3}
+  m_ChunkData: {fileID: 4900000, guid: 2f366425266492e4699a74e10a5b232c, type: 3}
+  m_Cameras: []

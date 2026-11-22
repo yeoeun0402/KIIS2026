@@ -1,0 +1,21 @@
+{
+ "sweep": {
+  "pot_samples": 660,
+  "pulses": {
+   "L": 18,
+   "R": 20
+  },
+  "pot_min": 329,
+  "pot_max": 691,
+  "noise_adc": 0.83,
+  "adc_per_pulse_L": -22.0,
+  "adc_per_pulse_L_n": 14,
+  "response_ms_L": 87.0,
+  "adc_per_pulse_R": 22.0,
+  "adc_per_pulse_R_n": 15,
+  "response_ms_R": 90.0,
+  "left_increases_pot": false,
+  "note": "POT 는 50 ms 마다 → 지연 해상도 50 ms. 범위 = 기계적 끝(끝까지 돌렸을 때만 의미)"
+ },
+ "segments": []
+}
